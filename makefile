@@ -1,9 +1,10 @@
-httpserver: HttpServer.cpp HttpServer.h
-	g++ -c HttpServer.cpp -o httpserver
+main: main.cpp  httpserver.o
+	g++ main.cpp -o main httpserver.o
 
-main: main.cpp  httpserver
-	g++ main.cpp -o main
+httpserver.o: HttpServer.cpp HttpServer.h
+	g++ -c HttpServer.cpp
 
 clean: main
 	if [ -f "main" ]; then rm main;fi
 	if [ -f "httpserver" ]; then  rm httpserver;fi
+	if [ -f "HttpServer.o" ]; then  rm HttpServer.o;fi
