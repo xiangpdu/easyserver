@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <pthread/pthread.h>
 
 #define LOCAL_HOST "127.0.0.1"
 #define LISTEN_BACKLOG 100
@@ -37,7 +38,14 @@ void HttpServer::ListenAt(unsigned int port) {
     struct sockaddr peeraddr;
     socklen_t peeraddrsize;
     while(true){
-        int res = accept(sock, &peeraddr, &peeraddrsize);
+        int confd = accept(sock, &peeraddr, &peeraddrsize);
+        size_t size = 0;
+        char buf[1000];
+        memset(buf, 0, sizeof(buf));
+        while((size = recv(confd, buf, sizeof(buf), 0)) != -1){
+            printf("%s\n", buf);
+        }
+
     }
     
 }
